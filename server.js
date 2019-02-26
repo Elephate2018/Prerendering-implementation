@@ -26,8 +26,6 @@ var request = require('request');
 var redis = require("redis");
 var client = redis.createClient({host : 'localhost', port : 6379})
 
-
-
 app.use(require('prerender-node')  // Prerender io implementation
 .set('prerenderServiceUrl', 'http://localhost:3000/')
 .set('beforeRender', function(req, done) {
@@ -37,20 +35,6 @@ app.use(require('prerender-node')  // Prerender io implementation
 }));
 
 app.use(express.static('public'));
-
-// Rendertron imprementation
-/* 
-app.use(rendertron.makeMiddleware({
-  proxyUrl: 'http://localhost:3000/render'
-}));
-
-request('http://localhost:3000/screenshot/http://localhost:8080/', function (error, response, html) {
-  if (!error && response.statusCode == 200) {
-    console.log('screenshoted');
-  }
-});
-*/
-
 
 app.get('/*', function(req, res) {
   res.sendFile('./public/index.html', { root: __dirname })
